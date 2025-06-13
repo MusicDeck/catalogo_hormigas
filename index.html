@@ -1,65 +1,75 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Catálogo Hormigas</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #f4f4f4;
-      padding: 20px;
-    }
-    h1 {
-      text-align: center;
-    }
-    .item {
-      background: white;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-      margin: 10px 0;
-      padding: 15px;
-    }
-    .item a {
-      color: #007BFF;
-      text-decoration: none;
-    }
-    .item a:hover {
-      text-decoration: underline;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <title>Catálogo de Vídeos del Grupo (conectado a Sheet.best)</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; }
+        input[type="text"] { width: 300px; padding: 10px; margin-bottom: 20px; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
+        th { background-color: #f2f2f2; }
+        tr:hover { background-color: #f9f9f9; }
+        a { color: #1a0dab; text-decoration: none; }
+    </style>
 </head>
 <body>
-  <h1>Catálogo de las Hormigadas 🐜</h1>
-  <div id="catalogo"></div>
+    <h1>Catálogo Temático de Vídeos (vía Sheet.best)</h1>
+    <input type="text" id="searchInput" onkeyup="filterTable()" placeholder="Buscar tema, persona, etc.">
+    <table id="videoTable">
+        <thead>
+            <tr>
+                <th>Tema / Acción</th>
+                <th>Fecha</th>
+                <th>Ver</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Datos cargados dinámicamente -->
+        </tbody>
+    </table>
 
-  <script>
-    const url = "https://api.sheetbest.com/sheets/123148ec-1b40-4e3f-bdce-e654bd2e367c";
-    const contenedor = document.getElementById("catalogo");
+    <script>
+        const sheetbestUrl = "https://api.sheetbest.com/sheets/123148ec-1b40-4e3f-bdce-e654bd2e367c";
 
-    fetch(url)
-      .then(response => response.json())
-      .then(data => {
-        if (!data.length) {
-          contenedor.innerHTML = "<p>No se encontraron datos.</p>";
-          return;
+        fetch(sheetbestUrl)
+            .then(response => response.json())
+            .then(data => {
+                const tbody = document.querySelector("#videoTable tbody");
+                data.forEach(row => {
+                    const tema = row["acciones"];
+                    const fecha = row["Fecha"];
+                    const enlace = row["ENLACES de las GRABACIONES"];
+                    const timestamp = row["timestamp_seg"];
+                    if (!tema || !enlace) return;
+
+                    let link = enlace;
+                    if (timestamp) {
+                        if (enlace.includes("youtu.be")) {
+                            link += "?t=" + timestamp;
+                        } else if (enlace.includes("youtube.com/watch")) {
+                            link += "&t=" + timestamp + "s";
+                        }
+                    }
+
+                    const tr = document.createElement("tr");
+                    tr.innerHTML = `
+                        <td>${tema}</td>
+                        <td>${fecha}</td>
+                        <td><a href="${link}" target="_blank">Ver</a></td>
+                    `;
+                    tbody.appendChild(tr);
+                });
+            })
+            .catch(error => console.error("Error cargando datos:", error));
+
+        function filterTable() {
+            const input = document.getElementById("searchInput").value.toLowerCase();
+            document.querySelectorAll("#videoTable tbody tr").forEach(row => {
+                row.style.display = row.textContent.toLowerCase().includes(input) ? "" : "none";
+            });
         }
-
-        data.forEach(item => {
-          const div = document.createElement("div");
-          div.className = "item";
-          div.innerHTML = `
-            <strong>${item.FECHA}</strong><br />
-            <p>${item.ACCIÓN}</p>
-            <a href="${item.ENLACE}&t=${item.TIMESTAMP}s" target="_blank">Ir al vídeo</a>
-          `;
-          contenedor.appendChild(div);
-        });
-      })
-      .catch(error => {
-        console.error("Error al cargar los datos:", error);
-        contenedor.innerHTML = "<p>Error al cargar los datos.</p>";
-      });
-  </script>
+    </script>
 </body>
 </html>
