@@ -38,10 +38,10 @@
             .then(data => {
                 const tbody = document.querySelector("#videoTable tbody");
                 data.forEach(row => {
-                    const tema = row["acciones"];
-                    const fecha = row["Fecha"];
-                    const enlace = row["ENLACES de las GRABACIONES"];
-                    const timestamp = row["timestamp_seg"];
+                        const tema = row["ACCIÓN"];
+                        const fecha = row["FECHA"];
+                        const enlace = row["ENLACE"];
+                        const timestamp = row["TIMESTAMP"];
                     if (!tema || !enlace) return;
 
                     let link = enlace;
