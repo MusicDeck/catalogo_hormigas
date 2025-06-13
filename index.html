@@ -3,7 +3,7 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Catálogo de Vídeos del Grupo (Google Sheet)</title>
+    <title>Catálogo de Vídeos del Grupo (conectado a Sheet.best)</title>
     <style>
         body { font-family: Arial, sans-serif; margin: 40px; }
         input[type="text"] { width: 300px; padding: 10px; margin-bottom: 20px; }
@@ -15,7 +15,7 @@
     </style>
 </head>
 <body>
-    <h1>Catálogo Temático de Vídeos (vía Google Sheets)</h1>
+    <h1>Catálogo Temático de Vídeos (vía Sheet.best)</h1>
     <input type="text" id="searchInput" onkeyup="filterTable()" placeholder="Buscar tema, persona, etc.">
     <table id="videoTable">
         <thead>
@@ -30,52 +30,44 @@
         </tbody>
     </table>
 
-    <script src="https://cdn.jsdelivr.net/npm/tabletop@1.6.0/tabletop.min.js"></script>
     <script>
-        window.addEventListener('DOMContentLoaded', init);
+        const sheetbestUrl = "https://api.sheetbest.com/sheets/123148ec-1b40-4e3f-bdce-e654bd2e367c";
 
-        function init() {
-            Tabletop.init({
-                key: '1g1X3ky7K_-uCV_sylEsqq1g9ZagZJGhIfFUjlkh8FY4',
-                simpleSheet: true,
-                callback: showData
-            });
-        }
+        fetch(sheetbestUrl)
+            .then(response => response.json())
+            .then(data => {
+                const tbody = document.querySelector("#videoTable tbody");
+                data.forEach(row => {
+                    const tema = row["acciones"];
+                    const fecha = row["Fecha"];
+                    const enlace = row["ENLACES de las GRABACIONES"];
+                    const timestamp = row["timestamp_seg"];
+                    if (!tema || !enlace) return;
 
-        function buildLink(baseURL, timestamp) {
-            if (!timestamp) return baseURL;
-            if (baseURL.includes("youtu.be")) {
-                return baseURL + "?t=" + timestamp;
-            } else if (baseURL.includes("youtube.com/watch")) {
-                return baseURL + "&t=" + timestamp + "s";
-            } else {
-                return baseURL;  // fallback por si acaso
-            }
-        }
+                    let link = enlace;
+                    if (timestamp) {
+                        if (enlace.includes("youtu.be")) {
+                            link += "?t=" + timestamp;
+                        } else if (enlace.includes("youtube.com/watch")) {
+                            link += "&t=" + timestamp + "s";
+                        }
+                    }
 
-        function showData(data) {
-            const tbody = document.querySelector("#videoTable tbody");
-            data.forEach(function(row) {
-                if (!row["acciones"] || !row["ENLACES de las GRABACIONES"]) return;
-                const link = buildLink(row["ENLACES de las GRABACIONES"], row["timestamp_seg"]);
-                const tr = document.createElement("tr");
-                tr.innerHTML = `
-                    <td>${row["acciones"]}</td>
-                    <td>${row["Fecha"]}</td>
-                    <td><a href="${link}" target="_blank">Ver</a></td>
-                `;
-                tbody.appendChild(tr);
-            });
-        }
+                    const tr = document.createElement("tr");
+                    tr.innerHTML = `
+                        <td>${tema}</td>
+                        <td>${fecha}</td>
+                        <td><a href="${link}" target="_blank">Ver</a></td>
+                    `;
+                    tbody.appendChild(tr);
+                });
+            })
+            .catch(error => console.error("Error cargando datos:", error));
 
         function filterTable() {
-            var input = document.getElementById("searchInput");
-            var filter = input.value.toLowerCase();
-            var rows = document.querySelectorAll("#videoTable tbody tr");
-
-            rows.forEach(function(row) {
-                var text = row.textContent.toLowerCase();
-                row.style.display = text.includes(filter) ? "" : "none";
+            const input = document.getElementById("searchInput").value.toLowerCase();
+            document.querySelectorAll("#videoTable tbody tr").forEach(row => {
+                row.style.display = row.textContent.toLowerCase().includes(input) ? "" : "none";
             });
         }
     </script>
