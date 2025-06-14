@@ -4,10 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Catálogo de vídeos del Grupo Hormigas</title>
+    <link href="https://fonts.googleapis.com/css2?family=Festive&display=swap" rel="stylesheet">
     <style>
-        body { font-family: Arial, sans-serif; margin: 0; padding: 0; }
+        body { font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: #fd8ca1; }
         header {
-            background-color: #fdf6f0;
+            background-color: #fd8ca1;
             color: #333;
             padding: 20px;
             text-align: center;
@@ -24,16 +25,18 @@
             height: auto;
             width: auto;
         }
-        header h1 {
-            margin: 0;
-            font-size: 2em;
-        }
         header p {
+            font-family: 'Festive', cursive;
             margin-top: 10px;
-            font-size: 1em;
+            font-size: 1.4em;
+            color: #4a2c2a;
         }
         main {
             padding: 20px 40px;
+            background-color: white;
+        }
+        h2 {
+            color: #333;
         }
         input[type="text"] {
             width: 100%; max-width: 400px; padding: 10px; margin-bottom: 20px; }
@@ -44,8 +47,7 @@
         a { color: #1a0dab; text-decoration: none; }
 
         @media screen and (max-width: 600px) {
-            header h1 { font-size: 1.4em; }
-            header p { font-size: 0.9em; }
+            header p { font-size: 1.1em; }
             main { padding: 20px; }
             table, thead, tbody, th, td, tr {
                 display: block;
@@ -80,10 +82,8 @@
     <header>
         <div class="logo-container">
             <img src="logo_hormigas_magicas.png" alt="Hormigas Mágicas">
-            <div>
-                <p>Inquietas, pequeñas, trabajadoras y trabajamos juntas</p>
-            </div>
         </div>
+        <p>Pequeñas, inquietas y trabajamos juntas</p>
     </header>
     <main>
         <h2>Catálogo de vídeos del Grupo Hormigas</h2>
