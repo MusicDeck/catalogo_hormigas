@@ -12,16 +12,24 @@
             padding: 20px;
             text-align: center;
         }
+        header .logo-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
         header img {
-            max-width: 300px;
+            max-height: 100px;
             height: auto;
+            width: auto;
         }
         header h1 {
-            margin: 15px 0 5px;
+            margin: 0;
             font-size: 2em;
         }
         header p {
-            margin: 0;
+            margin-top: 10px;
             font-size: 1em;
         }
         main {
@@ -70,8 +78,12 @@
 </head>
 <body>
     <header>
-        <img src="logo_hormigas_magicas.png" alt="Hormigas Mágicas">
-        <p>Pequeñas, inquietas y trabajamos juntas</p>
+        <div class="logo-container">
+            <img src="logo_hormigas_magicas.png" alt="Hormigas Mágicas">
+            <div>
+                <p>Inquietas, pequeñas, trabajadoras y trabajamos juntas</p>
+            </div>
+        </div>
     </header>
     <main>
         <h2>Catálogo de vídeos del Grupo Hormigas</h2>
