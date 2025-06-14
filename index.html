@@ -48,6 +48,30 @@
 
         @media screen and (max-width: 600px) {
             main { padding: 20px; }
+            table {
+                width: 100%;
+                display: table;
+            }
+            thead {
+                display: table-header-group;
+            }
+            tbody {
+                display: table-row-group;
+            }
+            tr {
+                display: table-row;
+                margin-bottom: 0;
+            }
+            td, th {
+                display: table-cell;
+                border: 1px solid #ccc;
+                padding: 8px;
+                text-align: left;
+            }
+            td::before {
+                display: none;
+            }
+        }
             table, thead, tbody, th, td, tr {
                 display: block;
             }
@@ -75,10 +99,7 @@
             td:nth-of-type(2)::before { content: "Tema / Acción"; }
             td:nth-of-type(3)::before { content: "Ver"; }
         }
-            main { padding: 20px; }
-            table, thead, tbody, th, td, tr {
-                display: block;
-            }
+            
             thead tr {
                 display: none;
             }
