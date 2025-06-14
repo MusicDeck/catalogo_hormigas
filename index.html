@@ -3,10 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Catálogo de Vídeos del Grupo (conectado a Sheet.best)</title>
+    <title>Catálogo de vídeos del Grupo Hormigas</title>
     <style>
-        body { font-family: Arial, sans-serif; margin: 40px; }
-        input[type="text"] { width: 100%; max-width: 400px; padding: 10px; margin-bottom: 20px; }
+        body { font-family: Arial, sans-serif; margin: 0; padding: 0; }
+        header {
+            background-color: #fdf6f0;
+            color: #333;
+            padding: 20px;
+            text-align: center;
+        }
+        header img {
+            max-width: 300px;
+            height: auto;
+        }
+        header h1 {
+            margin: 15px 0 5px;
+            font-size: 2em;
+        }
+        header p {
+            margin: 0;
+            font-size: 1em;
+        }
+        main {
+            padding: 20px 40px;
+        }
+        input[type="text"] {
+            width: 100%; max-width: 400px; padding: 10px; margin-bottom: 20px; }
         table { width: 100%; border-collapse: collapse; }
         th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
         th { background-color: #f2f2f2; }
@@ -14,6 +36,9 @@
         a { color: #1a0dab; text-decoration: none; }
 
         @media screen and (max-width: 600px) {
+            header h1 { font-size: 1.4em; }
+            header p { font-size: 0.9em; }
+            main { padding: 20px; }
             table, thead, tbody, th, td, tr {
                 display: block;
             }
@@ -44,20 +69,27 @@
     </style>
 </head>
 <body>
-    <h1>Catálogo Temático de Vídeos (vía Sheet.best)</h1>
-    <input type="text" id="searchInput" onkeyup="filterTable()" placeholder="Buscar tema, persona, etc.">
-    <table id="videoTable">
-        <thead>
-            <tr>
-                <th>Fecha</th>
-                <th>Tema / Acción</th>
-                <th>Ver</th>
-            </tr>
-        </thead>
-        <tbody>
-            <!-- Datos cargados dinámicamente -->
-        </tbody>
-    </table>
+    <header>
+        <img src="logo_hormigas_magicas.png" alt="Hormigas Mágicas">
+        <h1>Hormigas Mágicas</h1>
+        <p>Inquietas, pequeñas, trabajadoras y trabajamos juntas</p>
+    </header>
+    <main>
+        <h2>Catálogo de vídeos del Grupo Hormigas</h2>
+        <input type="text" id="searchInput" onkeyup="filterTable()" placeholder="Buscar tema, persona, etc.">
+        <table id="videoTable">
+            <thead>
+                <tr>
+                    <th>Fecha</th>
+                    <th>Tema / Acción</th>
+                    <th>Ver</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Datos cargados dinámicamente -->
+            </tbody>
+        </table>
+    </main>
 
     <script>
         const sheetbestUrl = "https://api.sheetbest.com/sheets/123148ec-1b40-4e3f-bdce-e654bd2e367c";
