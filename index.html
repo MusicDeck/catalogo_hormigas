@@ -1,9 +1,8 @@
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Catálogo de Vídeos del Grupo Hormigas</title>
+    <title>Catálogo de Vídeos del Grupo (conectado a Sheet.best)</title>
     <style>
         body { font-family: Arial, sans-serif; margin: 40px; }
         input[type="text"] { width: 300px; padding: 10px; margin-bottom: 20px; }
@@ -15,14 +14,14 @@
     </style>
 </head>
 <body>
-    <h1>Catálogo Temático de Vídeos del Grupo Hormigas</h1>
+    <h1>Catálogo Temático de Vídeos (vía Sheet.best)</h1>
     <input type="text" id="searchInput" onkeyup="filterTable()" placeholder="Buscar tema, persona, etc.">
     <table id="videoTable">
         <thead>
             <tr>
                 <th>Fecha</th>
                 <th>Tema / Acción</th>
-                <th>Ver en YouTube</th>
+                <th>Ver</th>
             </tr>
         </thead>
         <tbody>
@@ -38,10 +37,10 @@
             .then(data => {
                 const tbody = document.querySelector("#videoTable tbody");
                 data.forEach(row => {
-                        const fecha = row["FECHA"];
-                        const tema = row["ACCIÓN"];
-                        const enlace = row["ENLACE"];
-                        const timestamp = row["TIMESTAMP"];
+                    const tema = row["ACCIÓN"];
+                    const fecha = row["FECHA"];
+                    const enlace = row["ENLACE"];
+                    const timestamp = row["TIMESTAMP"];
                     if (!tema || !enlace) return;
 
                     let link = enlace;
@@ -55,8 +54,8 @@
 
                     const tr = document.createElement("tr");
                     tr.innerHTML = `
-                        <td>${tema}</td>
                         <td>${fecha}</td>
+                        <td>${tema}</td>
                         <td><a href="${link}" target="_blank">Ver</a></td>
                     `;
                     tbody.appendChild(tr);
